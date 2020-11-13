@@ -1,28 +1,58 @@
 "use strict"
-window.onload = function drawChes() {
-    let mainBlock = document.querySelector('.main-block');
-    let block;
-    let flag = false;
-    let Numerarion = {
-        0: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
-        9: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
-    };
-    for (let i = 0; i < 8; i++) {
-        for (let j = 0; j < 8; j++) {
-            block = document.createElement('div');
-            if (Numerarion[i] !== undefined && Numerarion[i][j] !== undefined) {
-                block.innerHTML = Numerarion[i][j];
-                block.className = 'block white';
-                block.style.textAlign = 'center'
-                mainBlock.appendChild(block);
-            }
-            if (j == 0) flag = !flag;
 
-            if (flag) block.className = 'block black';
-            else block.className = 'block white';
-            mainBlock.appendChild(block);
-            flag = !flag;
+
+window.onload = function chessboard() {
+    let newTable = document.createElement('table'),
+        flag = false,
+        lets = ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', ''],
+        blackFigs1 = ['1', '♜', '♞', '♝', '♛', '♚', '♝', '♞', '♜', '1'],
+        whiteFigs1 = ['8', '♖', '♘', '♗', '♕', '♔', '♗', '♘', '♖', '8'],
+        blackFigs2 = ['2', '♟', '♟', '♟', '♟', '♟', '♟', '♟', '♟', '2'],
+        whiteFigs2 = ['7', '♙', '♙', '♙', '♙', '♙', '♙', '♙', '♙', '7'];
+    for (let i = 0, a = 0; i < 10, a <= 9; i++, a++) {
+        let newTr = newTable.insertRow(i);
+        flag = !flag;
+        for (let j = 0; j < 10; j++) {
+            let newTd = newTr.insertCell(j);
+            newTd.style.width = '50px';
+            newTd.style.height = '50px';
+            newTd.style.textAlign = 'center';
+            newTd.style.fontSize = '50px';
+            newTd.style.verticalAlign = 'middle';
+            if (i > 0 && i < 9 && j < 9 && j > 0) {
+                if (flag) newTd.style.background = 'white';
+                else newTd.style.background = 'gray';
+                flag = !flag;
+            }
+            switch (i) {
+                case 0:
+                    newTd.innerText = lets[j];
+
+                    break;
+                case 1:
+                    newTd.innerHTML = blackFigs1[j];
+                    break;
+                case 2:
+                    newTd.innerHTML = blackFigs2[j];
+                    break;
+                case 7:
+                    newTd.innerHTML = whiteFigs2[j];
+                    break;
+                case 8:
+                    newTd.innerHTML = whiteFigs1[j];
+                    break;
+                case 9:
+                    newTd.innerText = lets[j];
+                    break;
+                default:
+                    if (j === 0 || j === 9) {
+                        newTd.innerHTML = a;
+                    }
+                    break;
+
+            }
         }
     }
-}
-//drawChes();
+    document.body.appendChild(newTable);
+};
+//chessboard();
